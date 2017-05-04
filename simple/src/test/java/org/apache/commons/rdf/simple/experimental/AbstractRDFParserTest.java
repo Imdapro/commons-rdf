@@ -292,4 +292,31 @@ public class AbstractRDFParserTest {
         d = dummyParser.base("http://www.example.net/test.ttl");
         assertTrue(d instanceof DummyRDFParserBuilder);
     }
+
+    @Test
+    @SuppressWarnings("all")
+    public void sourceTest(){
+
+        Object d = dummyParser.source(dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl"));
+        assertTrue(d instanceof DummyRDFParserBuilder);
+
+        d = dummyParser.source("http://www.example.net/test.ttl");
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void illegalTest(){
+
+        dummyParser.checkIsAbsolute(new IRI() {
+            @Override
+            public String getIRIString() {
+                return "";
+            }
+
+            @Override
+            public String ntriplesString() {
+                return "";
+            }
+        });
+    }
 }
