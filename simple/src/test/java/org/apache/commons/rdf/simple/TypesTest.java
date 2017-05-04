@@ -59,4 +59,9 @@ public class TypesTest {
         assertFalse(Types.get(new IRIImpl("http://www.w3.org/2001/XMLSchema#nonExistent")).isPresent());
     }
 
+    @Test
+    public void testToString(){
+        assertEquals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#langString>", Types.RDF_LANGSTRING.toString());
+    }
+
 }
