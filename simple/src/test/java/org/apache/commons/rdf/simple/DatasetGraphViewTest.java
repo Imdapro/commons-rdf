@@ -5,6 +5,7 @@ import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.simple.dummy.DummyTestDataset;
+import org.apache.commons.rdf.simple.dummy.DummyTestTriple;
 import org.junit.Test;
 
 /**
@@ -27,36 +28,6 @@ public class DatasetGraphViewTest {
     @Test
     public void addTest(){
 
-            datasetGraphView.add(new Triple() {
-                @Override
-                public BlankNodeOrIRI getSubject() {
-                    return new BlankNodeImpl();
-                }
-
-                @Override
-                public IRI getPredicate() {
-                    return new IRI() {
-                        @Override
-                        public String getIRIString() {
-                            return "getIRIString";
-                        }
-
-                        @Override
-                        public String ntriplesString() {
-                            return "ntriplesString";
-                        }
-                    };
-                }
-
-                @Override
-                public RDFTerm getObject() {
-                    return new RDFTerm() {
-                        @Override
-                        public String ntriplesString() {
-                            return "ntriplesString";
-                        }
-                    };
-                }
-            });
+            datasetGraphView.add(new DummyTestTriple());
     }
 }
