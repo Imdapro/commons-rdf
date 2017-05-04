@@ -30,4 +30,13 @@ public class DatasetGraphViewTest {
 
         datasetGraphView.add(new DummyTestTriple());
     }
+
+    @Test
+    public void removeTest(){
+
+        Triple triple = new DummyTestTriple();
+
+        datasetGraphView.add(triple);
+        datasetGraphView.remove(triple);
+    }
 }
