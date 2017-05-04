@@ -255,8 +255,6 @@ public class AbstractRDFParserTest {
         assertEquals(dummyParser.getTargetDataset(), Optional.empty());
     }
 
-
-
     @Test
     public void targetGraphTest(){
 
@@ -267,4 +265,14 @@ public class AbstractRDFParserTest {
         dummyParser.resetTarget();
         assertEquals(dummyParser.getTargetGraph(), Optional.empty());
     }
+
+    @Test
+    @SuppressWarnings("all")
+    public void rdfTermFactoryTest(){
+
+        Object d = dummyParser.rdfTermFactory(factory);
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
+
+
 }
