@@ -282,4 +282,14 @@ public class AbstractRDFParserTest {
         assertTrue(d instanceof DummyRDFParserBuilder);
     }
 
+    @Test
+    @SuppressWarnings("all")
+    public void baseTest(){
+
+        Object d = dummyParser.base(dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl"));
+        assertTrue(d instanceof DummyRDFParserBuilder);
+
+        d = dummyParser.base("http://www.example.net/test.ttl");
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
 }
