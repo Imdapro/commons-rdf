@@ -254,4 +254,17 @@ public class AbstractRDFParserTest {
         dummyParser.resetTarget();
         assertEquals(dummyParser.getTargetDataset(), Optional.empty());
     }
+
+
+
+    @Test
+    public void targetGraphTest(){
+
+        final IRI iri = dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl");
+        final Graph g = factory.createGraph();
+        dummyParser.source(iri).target(g);
+        assertTrue(dummyParser.getTargetGraph() == null);
+        dummyParser.resetTarget();
+        assertEquals(dummyParser.getTargetGraph(), Optional.empty());
+    }
 }
