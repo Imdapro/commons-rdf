@@ -10,5 +10,9 @@ import org.junit.Test;
  */
 public class RDFParserExceptionTest {
 
+    @Test(expected = RDFParseException.class)
+    public void test1() throws RDFParseException {
 
+        throw new RDFParseException(new DummyTestRDFParser());
+    }
 }
