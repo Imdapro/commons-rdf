@@ -28,6 +28,6 @@ public class DatasetGraphViewTest {
     @Test
     public void addTest(){
 
-            datasetGraphView.add(new DummyTestTriple());
+        datasetGraphView.add(new DummyTestTriple());
     }
 }
