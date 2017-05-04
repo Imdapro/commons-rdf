@@ -25,6 +25,7 @@ import org.apache.commons.rdf.api.BlankNode;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Concrete implementation of BlankNodeImpl test.
@@ -50,6 +51,13 @@ public class BlankNodeImplTest extends AbstractBlankNodeTest {
     public void toStringTest(){
 
         assertEquals(blankNode.toString(),"_:" + UUID.nameUUIDFromBytes(("urn:uuid:" + SALT + "#Test").getBytes(StandardCharsets.UTF_8)).toString());
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void equalsTest(){
+
+        assertTrue(!blankNode.equals(null));
     }
 
 
