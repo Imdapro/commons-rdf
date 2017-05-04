@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.apache.commons.rdf.api.*;
 import org.apache.commons.rdf.experimental.RDFParser;
@@ -334,6 +335,19 @@ public class AbstractRDFParserTest {
     public void illegalStateCheckTest(){
 
         dummyParser.checkTarget();
+
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void targetTest(){
+
+        final IRI iri = dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl");
+        final Graph g = factory.createGraph();
+        dummyParser.source(iri).target(g);
+
+        assertTrue(dummyParser.target(new DummyTestDataset()) instanceof DummyRDFParserBuilder);
+
 
     }
 }
