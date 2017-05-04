@@ -319,4 +319,14 @@ public class AbstractRDFParserTest {
             }
         });
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void illegalStateTest(){
+
+        try{
+            dummyParser.checkSource();
+
+        } catch (IOException ignored){}
+
+    }
 }
