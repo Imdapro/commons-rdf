@@ -28,15 +28,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
-import org.apache.commons.rdf.api.Graph;
-import org.apache.commons.rdf.api.IRI;
-import org.apache.commons.rdf.api.Literal;
-import org.apache.commons.rdf.api.RDFSyntax;
-import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.commons.rdf.api.RDF;
-import org.apache.commons.rdf.api.Triple;
+import org.apache.commons.rdf.api.*;
 import org.apache.commons.rdf.experimental.RDFParser;
 import org.apache.commons.rdf.simple.DummyRDFParserBuilder;
 import org.apache.commons.rdf.simple.SimpleRDF;
@@ -46,6 +42,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import javax.xml.crypto.Data;
 
 public class AbstractRDFParserTest {
 
@@ -246,4 +244,14 @@ public class AbstractRDFParserTest {
         assertEquals("\"text/turtle\"", firstPredicate(g, "contentType"));
     }
 
+    @Test
+    public void targetDatasetTest(){
+
+        final IRI iri = dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl");
+        final Graph g = factory.createGraph();
+        dummyParser.source(iri).target(g);
+        assertTrue(dummyParser.getTargetDataset() == null);
+        dummyParser.resetTarget();
+        assertEquals(dummyParser.getTargetDataset(), Optional.empty());
+    }
 }
