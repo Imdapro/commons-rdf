@@ -22,5 +22,12 @@ public class RDFParserExceptionTest {
         throw new RDFParseException(new DummyTestRDFParser(), "Test", new Throwable("TestThrowable"));
     }
 
+    @Test(expected = RDFParseException.class)
+    public void test3() throws RDFParseException {
+
+        throw new RDFParseException(new DummyTestRDFParser(), "Test");
+    }
+
+
 
 }
