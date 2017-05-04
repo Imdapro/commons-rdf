@@ -37,6 +37,10 @@ public class BlankNodeImplTest extends AbstractBlankNodeTest {
 
     private BlankNodeImpl blankNode = new BlankNodeImpl(SALT, "Test");
 
+    public BlankNodeImpl getTestBlankNode(){
+        return blankNode;
+    }
+
     @Override
     protected BlankNode getBlankNode() {
         return new BlankNodeImpl();

@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.apache.commons.rdf.api.RDFSyntax.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,9 +29,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 
+import org.apache.commons.rdf.simple.dummy.DummyTestDataset;
 import org.apache.commons.rdf.api.*;
 import org.apache.commons.rdf.experimental.RDFParser;
 import org.apache.commons.rdf.simple.DummyRDFParserBuilder;
@@ -43,8 +41,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javax.xml.crypto.Data;
 
 public class AbstractRDFParserTest {
 
@@ -61,7 +57,7 @@ public class AbstractRDFParserTest {
         testTtl = Files.createTempFile("test", ".ttl");
         testXml = Files.createTempFile("test", ".xml");
 
-        // No need to populate the files as the dummy parser
+        // No need to populate the files as the org.apache.commons.rdf.simple.dummy parser
         // doesn't actually read anything
     }
 

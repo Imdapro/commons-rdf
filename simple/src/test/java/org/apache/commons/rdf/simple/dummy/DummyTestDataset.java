@@ -1,4 +1,4 @@
-package org.apache.commons.rdf.simple.experimental;
+package org.apache.commons.rdf.simple.dummy;
 
 import org.apache.commons.rdf.api.*;
 
