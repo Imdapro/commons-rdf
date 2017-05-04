@@ -274,5 +274,12 @@ public class AbstractRDFParserTest {
         assertTrue(d instanceof DummyRDFParserBuilder);
     }
 
+    @Test
+    @SuppressWarnings("all")
+    public void contentTypeTest(){
+
+        Object d = dummyParser.contentType("http://www.example.net/test.ttl");
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
 
 }
