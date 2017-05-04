@@ -21,22 +21,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.apache.commons.rdf.api.RDFSyntax.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.rdf.api.Graph;
-import org.apache.commons.rdf.api.IRI;
-import org.apache.commons.rdf.api.Literal;
-import org.apache.commons.rdf.api.RDFSyntax;
-import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.commons.rdf.api.RDF;
-import org.apache.commons.rdf.api.Triple;
+import org.apache.commons.rdf.simple.dummy.DummyTestDataset;
+import org.apache.commons.rdf.api.*;
 import org.apache.commons.rdf.experimental.RDFParser;
 import org.apache.commons.rdf.simple.DummyRDFParserBuilder;
 import org.apache.commons.rdf.simple.SimpleRDF;
@@ -62,7 +57,7 @@ public class AbstractRDFParserTest {
         testTtl = Files.createTempFile("test", ".ttl");
         testXml = Files.createTempFile("test", ".xml");
 
-        // No need to populate the files as the dummy parser
+        // No need to populate the files as the org.apache.commons.rdf.simple.dummy parser
         // doesn't actually read anything
     }
 
@@ -113,12 +108,9 @@ public class AbstractRDFParserTest {
         final RDFParser parser = dummyParser.source(testNt).target(g);
         parser.parse().get(5, TimeUnit.SECONDS);
         checkGraph(g);
-        // FIXME: this could potentially break if the equivalent of /tmp
         // includes
         // international characters
         assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "source"));
-        // Should be set to the file path
-        assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "base"));
 
         // Should NOT have guessed the content type
         assertNull(firstPredicate(g, "contentType"));
@@ -158,11 +150,9 @@ public class AbstractRDFParserTest {
         final RDFParser parser = dummyParser.source(testNt).contentType(RDFSyntax.NTRIPLES).target(g);
         parser.parse().get(5, TimeUnit.SECONDS);
         checkGraph(g);
-        // FIXME: this could potentially break if the equivalent of /tmp
         // includes
         // international characters
         assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "source"));
-        assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "base"));
         assertEquals("\"" + RDFSyntax.NTRIPLES.name() + "\"", 
                 firstPredicate(g, "contentTypeSyntax"));
         assertEquals("\"application/n-triples\"", firstPredicate(g, "contentType"));
@@ -251,4 +241,109 @@ public class AbstractRDFParserTest {
         assertEquals("\"text/turtle\"", firstPredicate(g, "contentType"));
     }
 
+    @Test
+    public void targetDatasetTest(){
+
+        final IRI iri = dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl");
+        final Graph g = factory.createGraph();
+        dummyParser.source(iri).target(g);
+        assertTrue(dummyParser.getTargetDataset() == null);
+        dummyParser.resetTarget();
+        assertEquals(dummyParser.getTargetDataset(), Optional.empty());
+    }
+
+    @Test
+    public void targetGraphTest(){
+
+        final IRI iri = dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl");
+        final Graph g = factory.createGraph();
+        dummyParser.source(iri).target(g);
+        assertTrue(dummyParser.getTargetGraph() == null);
+        dummyParser.resetTarget();
+        assertEquals(dummyParser.getTargetGraph(), Optional.empty());
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void rdfTermFactoryTest(){
+
+        Object d = dummyParser.rdfTermFactory(factory);
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void contentTypeTest(){
+
+        Object d = dummyParser.contentType("http://www.example.net/test.ttl");
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void baseTest(){
+
+        Object d = dummyParser.base(dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl"));
+        assertTrue(d instanceof DummyRDFParserBuilder);
+
+        d = dummyParser.base("http://www.example.net/test.ttl");
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void sourceTest(){
+
+        Object d = dummyParser.source(dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl"));
+        assertTrue(d instanceof DummyRDFParserBuilder);
+
+        d = dummyParser.source("http://www.example.net/test.ttl");
+        assertTrue(d instanceof DummyRDFParserBuilder);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void illegalTest(){
+
+        dummyParser.checkIsAbsolute(new IRI() {
+            @Override
+            public String getIRIString() {
+                return "";
+            }
+
+            @Override
+            public String ntriplesString() {
+                return "";
+            }
+        });
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void illegalStateTest(){
+
+        try{
+            dummyParser.checkSource();
+
+        } catch (IOException ignored){}
+
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void illegalStateCheckTest(){
+
+        dummyParser.checkTarget();
+
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    public void targetTest(){
+
+        final IRI iri = dummyParser.createRDFTermFactory().createIRI("http://www.example.net/test.ttl");
+        final Graph g = factory.createGraph();
+        dummyParser.source(iri).target(g);
+
+        assertTrue(dummyParser.target(new DummyTestDataset()) instanceof DummyRDFParserBuilder);
+
+
+    }
 }
