@@ -39,4 +39,13 @@ public class DatasetGraphViewTest {
         datasetGraphView.add(triple);
         datasetGraphView.remove(triple);
     }
+
+    @Test
+    public void clearTest(){
+
+        Triple triple = new DummyTestTriple();
+
+        datasetGraphView.add(triple);
+        datasetGraphView.clear();
+    }
 }
