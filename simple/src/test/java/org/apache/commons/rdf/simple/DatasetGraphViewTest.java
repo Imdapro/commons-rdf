@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class DatasetGraphViewTest {
 
-    DatasetGraphView datasetGraphView = new DatasetGraphView(new DummyTestDataset());
+    private DatasetGraphView datasetGraphView = new DatasetGraphView(new DummyTestDataset());
 
     @Test
     public void closeTest(){
