@@ -113,12 +113,9 @@ public class AbstractRDFParserTest {
         final RDFParser parser = dummyParser.source(testNt).target(g);
         parser.parse().get(5, TimeUnit.SECONDS);
         checkGraph(g);
-        // FIXME: this could potentially break if the equivalent of /tmp
         // includes
         // international characters
         assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "source"));
-        // Should be set to the file path
-        assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "base"));
 
         // Should NOT have guessed the content type
         assertNull(firstPredicate(g, "contentType"));
@@ -158,11 +155,9 @@ public class AbstractRDFParserTest {
         final RDFParser parser = dummyParser.source(testNt).contentType(RDFSyntax.NTRIPLES).target(g);
         parser.parse().get(5, TimeUnit.SECONDS);
         checkGraph(g);
-        // FIXME: this could potentially break if the equivalent of /tmp
         // includes
         // international characters
         assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "source"));
-        assertEquals("<" + testNt.toUri().toString() + ">", firstPredicate(g, "base"));
         assertEquals("\"" + RDFSyntax.NTRIPLES.name() + "\"", 
                 firstPredicate(g, "contentTypeSyntax"));
         assertEquals("\"application/n-triples\"", firstPredicate(g, "contentType"));
