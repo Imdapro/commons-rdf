@@ -5,6 +5,8 @@ import org.apache.commons.rdf.simple.dummy.DummyTestRDFParser;
 import org.apache.commons.rdf.simple.experimental.RDFParseException;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by Csaba Kothencz on 2017. 05. 04.
  */
@@ -32,6 +34,15 @@ public class RDFParserExceptionTest {
     public void test4() throws RDFParseException {
 
         throw new RDFParseException(new DummyTestRDFParser(), new Throwable("TestThrowable"));
+    }
+
+    @Test
+    public void test5() throws RDFParseException {
+
+        DummyTestRDFParser dummyTestRDFParser = new DummyTestRDFParser();
+
+        RDFParseException exception = new RDFParseException(dummyTestRDFParser);
+        assertEquals(dummyTestRDFParser, exception.getRDFParserBuilder());
     }
 
 
